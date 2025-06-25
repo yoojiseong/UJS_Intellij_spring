@@ -4,9 +4,11 @@ import com.eaxmple.hello_project._3jdbc.dto.TodoDTO;
 import com.eaxmple.hello_project._3jdbc.service.TodoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import lombok.extern.log4j.Log4j2;
 
 import java.time.LocalDate;
 
+@Log4j2
 public class TodoServiceTests {
     // 서비스의 기능을 불러오기.
     private TodoService todoService;
@@ -23,9 +25,11 @@ public class TodoServiceTests {
         // 화면 -> 컨트롤러 부터 , DTO를 받아왔다고 가정,
         // 더미 DTO 를 생성하기.
         TodoDTO todoDTO = TodoDTO.builder()
-                .title("서비스, 단위테스트 진행")
+                .title("서비스, 단위테스트 진행22")
                 .dueDate(LocalDate.now())
                 .build();
+        log.info("TodoService 테스트: ");
+        log.info("TodoService 테스트에서 todoDTO:"+todoDTO);
         // 서비스에서 기능 테스트.
         todoService.register(todoDTO);
     }

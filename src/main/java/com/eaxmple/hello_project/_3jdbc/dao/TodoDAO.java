@@ -83,6 +83,7 @@ public class TodoDAO {
         }
         return list;
     }
+    //하나만 선택하기
     public TodoVO selectOne(Long tno) throws Exception{
         String sql = "select * from tbl_todo where tno=?";
 

@@ -5,8 +5,13 @@ import com.eaxmple.hello_project._3jdbc.dao.TodoDAO;
 import com.eaxmple.hello_project._3jdbc.domain.TodoVO;
 import com.eaxmple.hello_project._3jdbc.dto.TodoDTO;
 import com.eaxmple.hello_project._3jdbc.util.MapperUtil;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Log4j2
 public enum TodoService {
     INSTANCE;
     //다른 기능 불러와서 사용할 준비
@@ -32,5 +37,37 @@ public enum TodoService {
         TodoVO todoVO = modelMapper.map(todoDto, TodoVO.class);
         System.out.println("TodoService에서 변환한 데이터 확인 : "+todoVO);
         //서비스 -> DAO로 VO를 전달
+        dao.insert(todoVO);
+    }
+    // 목록기능, 전체조회.
+    public List<TodoDTO> listAll() throws  Exception {
+        // DAO에서 , 디비에서 데이터 전체 조회 기능 있음. 일단, 이용하기.
+        List<TodoVO> voList = dao.selectAll();
+        log.info("현재 TodoService 작업중.listAll ");
+        log.info("데이터 확인 : " + voList);
+
+
+        // 전
+        // TodoVO -> TodoDTO
+//        List<TodoDTO> dtoListFor = new ArrayList<>();
+//        for(int i = 0 ; i < voList.size(); i++){
+//            TodoVO todoVO = voList.get(i);
+//            TodoDTO todoDTO = modelMapper.map(todoVO, TodoDTO.class);
+//            dtoListFor.add(todoDTO);
+//        }
+
+        // 후
+        // 병렬 처리
+        List<TodoDTO> dtoList
+                = voList.stream().map(vo -> modelMapper.map(vo, TodoDTO.class))
+                .collect(Collectors.toList());
+        return dtoList;
+
+    }
+
+    public TodoVO convertDto(TodoDTO todoDto) throws Exception {
+        TodoVO todoVO = modelMapper.map(todoDto, TodoVO.class);
+        System.out.println("DTO -> VO로 변환 완료");
+        return todoVO;
     }
 }
