@@ -14,6 +14,17 @@
     <title>Title</title>
 </head>
 <body>
+<h1>임시 확인용 세션 정보 확인</h1>
+<%--<p>EL표기법, 간단히 로그인 정보 : ${sessionScope.loginInfo}</p>--%>
+<%--조건부 출력--%>
+<c:if  test="${not empty sessionScope.loginInfo}">
+<p>로그인 상태 : 로그인이 된 경우</p>
+<p>EL표기법, 간단히 로그인 정보 : ${sessionScope.loginInfo}</p>
+    </c:if>
+<c:if test="${empty sessionScope.loginInfo}">
+    <p>로그인 상태 : 로그인 되지 않음</p>
+</c:if>
+
 <h1>Todo List 임시 화면</h1>
 <span><a href="/todo/register2">글쓰기</a></span>
     <c:forEach items="${dtoList}" var = "dto">
