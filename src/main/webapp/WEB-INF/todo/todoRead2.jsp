@@ -28,9 +28,15 @@
     <input type="checkbox" name="finished" ${dto.finished ? "checked":""} readonly>
 </div>
 <div>
-    <a href="/todo/update?tno=${dto.tno}">수정폼</a>
-    <a href="/todo/delete2">삭제</a>
+    <a href="/todo/update?tno=${dto.tno}">수정폼 미구현</a>
     <a href="/todo/list2">목록가기</a>
 </div>
+
+<form id="form2" action="/todo/delete2" method="post">
+    <input type="hidden" name="tno" value="${dto.tno}" readonly>
+    <div>
+        <button type="submit">삭제</button>
+    </div>
+</form>
 </body>
 </html>

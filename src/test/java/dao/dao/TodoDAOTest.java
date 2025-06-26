@@ -67,7 +67,7 @@ public class TodoDAOTest {
     @Test
     public void testDelete() throws Exception{
         Long tno = 1L;
-        todoDAO.delete(tno);
+        todoDAO.deleteOne(tno);
         System.out.println("삭제 완료");
 
     }

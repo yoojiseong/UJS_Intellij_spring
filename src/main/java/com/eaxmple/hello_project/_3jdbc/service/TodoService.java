@@ -76,9 +76,10 @@ public enum TodoService {
         return todoDTO;
     }
 
-    public TodoVO convertDto(TodoDTO todoDto) throws Exception {
-        TodoVO todoVO = modelMapper.map(todoDto, TodoVO.class);
-        System.out.println("DTO -> VO로 변환 완료");
-        return todoVO;
+
+    //삭제 기능
+    public void remove(Long tno) throws Exception{
+        log.info("TodoService : 삭제 기능 작업, tno 번호 확인 : "+tno);
+        dao.deleteOne(tno);
     }
 }

@@ -43,4 +43,10 @@ public class TodoServiceTests {
         log.info("todoDTO:"+todoDTO);
 
     }
+
+    @Test
+    public void testRemove() throws Exception{
+        todoService.remove(10L);
+        log.info("서비스 단위 테스트 삭제 확인");
+    }
 }
