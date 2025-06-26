@@ -82,4 +82,11 @@ public enum TodoService {
         log.info("TodoService : 삭제 기능 작업, tno 번호 확인 : "+tno);
         dao.deleteOne(tno);
     }
+
+    //수정기증
+    public void modify(TodoDTO todoDto) throws Exception{
+        log.info("TodoService : 수정 기능 작업");
+        TodoVO todoVO = modelMapper.map(todoDto, TodoVO.class);
+        dao.updateOne(todoVO);
+    }
 }

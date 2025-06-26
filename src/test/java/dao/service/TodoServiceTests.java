@@ -49,4 +49,13 @@ public class TodoServiceTests {
         todoService.remove(10L);
         log.info("서비스 단위 테스트 삭제 확인");
     }
+
+    @Test
+    public void testUpdate() throws Exception{
+        //수정할 임시 데이터 넘겨주기
+        TodoDTO todoDTO = todoService.getByTno(14L);
+        log.info("서비스 단위 테스트 수정 기능 확인중 todoDTO:"+todoDTO);
+        todoService.modify(todoDTO);
+        log.info("서비스 단위 테스트 수정 기능 확인중");
+    }
 }
