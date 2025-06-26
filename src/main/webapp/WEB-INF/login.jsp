@@ -15,7 +15,7 @@
 <form action="/login" method="post">
     <input type="text" name="mid">
     <input type="password" name="mpw">
-    <button type="submit"></button>
+    <button type="submit">로그인</button>
 </form>
 </body>
 </html>
