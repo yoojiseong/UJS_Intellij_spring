@@ -54,6 +54,8 @@ public class TodoServiceTests {
     public void testUpdate() throws Exception{
         //수정할 임시 데이터 넘겨주기
         TodoDTO todoDTO = todoService.getByTno(14L);
+        //변경할 내용이 빠짐.
+        todoDTO.setTitle("제목만 변경해보기.");
         log.info("서비스 단위 테스트 수정 기능 확인중 todoDTO:"+todoDTO);
         todoService.modify(todoDTO);
         log.info("서비스 단위 테스트 수정 기능 확인중");
