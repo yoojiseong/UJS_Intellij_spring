@@ -39,7 +39,7 @@ public class TodoUpdateController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 한글 처리 임시 방편
-        request.setCharacterEncoding("UTF-8");
+//        request.setCharacterEncoding("UTF-8");
         //체크박스 처리 여부.
         //쿼리로 넘어온것들은 전부다 문자열임 true이면"on"이 들어옴
         String finishedStr = request.getParameter("finished");

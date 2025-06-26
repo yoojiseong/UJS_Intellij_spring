@@ -60,7 +60,7 @@ public class TodoRegController extends HttpServlet {
     //화면으로부터 전달 받은 데이터를 모델 클래스 TodoDTO에 담아서 전달하기
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
+//        req.setCharacterEncoding("UTF-8");
         TodoDTO todoDTO = TodoDTO.builder()
                 .title(req.getParameter("title"))
                 .dueDate(LocalDate.parse(req.getParameter("dueDate"),formatter))

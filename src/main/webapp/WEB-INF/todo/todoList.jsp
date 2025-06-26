@@ -20,7 +20,12 @@
 <c:if  test="${not empty sessionScope.loginInfo}">
 <p>로그인 상태 : 로그인이 된 경우</p>
 <p>EL표기법, 간단히 로그인 정보 : ${sessionScope.loginInfo}</p>
-    </c:if>
+
+<form action="/logout" method="post">
+    <button type="submit">로그아웃</button>
+</form>
+</c:if>
+
 <c:if test="${empty sessionScope.loginInfo}">
     <p>로그인 상태 : 로그인 되지 않음</p>
 </c:if>
