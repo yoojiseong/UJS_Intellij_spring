@@ -33,4 +33,14 @@ public class TodoServiceTests {
         // 서비스에서 기능 테스트.
         todoService.register(todoDTO);
     }
+
+    // 하나 조회 기능.
+    @Test
+    public void testGetByTno() throws Exception{
+        // 실제 조회 할 디비 데이터 내용 파악.
+        TodoDTO todoDTO = todoService.getByTno(14L);
+        log.info("서비스 단위테스트 하나조회 확인 ");
+        log.info("todoDTO:"+todoDTO);
+
+    }
 }

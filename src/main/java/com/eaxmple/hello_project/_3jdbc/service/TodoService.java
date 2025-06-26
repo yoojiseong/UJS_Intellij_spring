@@ -64,6 +64,17 @@ public enum TodoService {
         return dtoList;
 
     }
+    //하나조회.
+    // 전달 개요 : 화면 -> 컨트롤러(C) -> 서비스 (S):현위치 - > DAO() -> DB
+    // 기능 만들고, -> 단위 테스트 하자.
+    public TodoDTO getByTno(Long tno) throws Exception{
+        log.info("TodoService : 하나 조회 기능 작업");
+        // DAO 로 부터 전달 받은 데이터 타입 , TodoVO
+        TodoVO todoVO = dao.selectOne(tno);
+        //받은 VO -> DTO 변환하기.
+        TodoDTO todoDTO = modelMapper.map(todoVO, TodoDTO.class);
+        return todoDTO;
+    }
 
     public TodoVO convertDto(TodoDTO todoDto) throws Exception {
         TodoVO todoVO = modelMapper.map(todoDto, TodoVO.class);
