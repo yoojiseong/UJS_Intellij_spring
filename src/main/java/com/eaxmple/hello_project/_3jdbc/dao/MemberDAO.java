@@ -42,4 +42,25 @@ public class MemberDAO {
         pstmt.setString(2,mid);
         pstmt.executeUpdate();
     }
+
+    // uuid를 이용해서 맴버를 조회 하는 기능이 필요함
+    public MemberVO getMemberVOByUuid(String uuid) throws Exception {
+        String query = "select mid,mpw,mname uuid from tbl_member where uuid=?";
+
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement pstmt = connection.prepareStatement(query);
+
+        pstmt.setString(1,uuid);
+        @Cleanup ResultSet rs = pstmt.executeQuery();
+        rs.next();
+
+        MemberVO memberVO = MemberVO.builder()
+                .mid(rs.getString("mid"))
+                .mpw(rs.getString("mpw"))
+                .mname(rs.getString("mname"))
+                .uuid(rs.getString("uuid"))
+                .build();
+
+        return memberVO;
+    }
 }
