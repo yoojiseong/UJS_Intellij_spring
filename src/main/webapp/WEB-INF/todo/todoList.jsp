@@ -26,6 +26,7 @@
     <h3>mid : ${loginInfo.mid}</h3>
     <h3>mpw : ${loginInfo.mpw}</h3>
     <h3>mname : ${loginInfo.mname}</h3>
+    <h3>UUID : ${loginInfo.uuid}</h3>
     <form action="/logout" method="post">
         <button type="submit">로그아웃</button>
     </form>

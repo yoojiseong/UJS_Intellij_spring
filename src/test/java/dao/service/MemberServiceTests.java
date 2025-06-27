@@ -31,7 +31,7 @@ public class MemberServiceTests {
     // 업데이트 uuid
     @Test
     public void updateUuid() throws Exception {
-        String mid = "ujs";
+        String mid = "lsy2";
         String uuid = UUID.randomUUID().toString();
         memberService.updateUuid(mid, uuid);
     }

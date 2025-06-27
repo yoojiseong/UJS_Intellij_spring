@@ -6,10 +6,7 @@ import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -34,6 +31,8 @@ public class LoginController extends HttpServlet {
         boolean rememberMe = auto != null && auto.equals("on");
         log.info("LoginController, 화면에서 전달 받은 auto 의 on 확인 : " + auto);
         log.info("LoginController, 화면에서 전달 받은 auto 의 auto.equals(\"on\") rememberMe확인2 : " + rememberMe);
+
+
         if(rememberMe){ // 자동 로그인이 맞다면,
             // UUID : 랜덤하게 생성하는 문자열.
             // uuid 가 중복되지 않게, 랜덤한 문자열 생성하기.
@@ -55,9 +54,42 @@ public class LoginController extends HttpServlet {
 
         // 후
         // 디비에서, 로그인 처리를 한 유저를 , 담기 MemberDTO을 값으로 저장,
+
+//        if(rememberMe){ // 자동 로그인이 맞다면,
+//            // UUID : 랜덤하게 생성하는 문자열.
+//            // uuid 가 중복되지 않게, 랜덤한 문자열 생성하기.
+//            String uuid= UUID.randomUUID().toString();
+//            log.info("LoginController, uuid 샘플 확인 " + uuid);
+//            // 다음 시간에 이어서 하기.
+//
+//        }
         try {
             // 로그인한 유저 정보가 디비에 있다면 가져오기
             MemberDTO memberDTO = MemberService.INSTANCE.login(mid, mpw);
+
+            //===================================================================
+            if(rememberMe){ // 자동 로그인이 맞다면,
+                // UUID : 랜덤하게 생성하는 문자열.
+                // uuid 가 중복되지 않게, 랜덤한 문자열 생성하기.
+                String uuid= UUID.randomUUID().toString();
+                log.info("LoginController, uuid 샘플 확인 " + uuid);
+                MemberService.INSTANCE.updateUuid(mid,uuid);
+                memberDTO.setUuid(uuid);
+
+                //자동 로그인 -> 아이디와 패스워드를 입력 안하고 바로 접근하는것
+                // 로그인 -> 성공 -> 리스트
+                // 자동 로그인 체크 -> 리스트로 바로 감
+                // 자동 로그인 체크시 서버에서 웹브라우저에게 쿠키를 만들어줌
+                // 자동 로그인을 해당 쿠키 정보로 로그인을 함
+                Cookie rememberCookie = new Cookie("remember-me", uuid);
+                rememberCookie.setPath("/");
+                // 쿠키의 유효기간, 3분
+                rememberCookie.setMaxAge(60*3);
+                // 서버에서 만든 쿠키를 웹 브라우저에게 전달
+                resp.addCookie(rememberCookie);
+            }
+            //===================================================================
+
             // 세션 도구 이용하고
             HttpSession session = req.getSession();
             // 세션(서버의 임시 메모리 저장소), 키 : loginInfo, 값 : memberDTO , 저장
