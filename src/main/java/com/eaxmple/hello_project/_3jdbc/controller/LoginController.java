@@ -33,14 +33,7 @@ public class LoginController extends HttpServlet {
         log.info("LoginController, 화면에서 전달 받은 auto 의 auto.equals(\"on\") rememberMe확인2 : " + rememberMe);
 
 
-        if(rememberMe){ // 자동 로그인이 맞다면,
-            // UUID : 랜덤하게 생성하는 문자열.
-            // uuid 가 중복되지 않게, 랜덤한 문자열 생성하기.
-            String uuid= UUID.randomUUID().toString();
-            log.info("LoginController, uuid 샘플 확인 " + uuid);
-            // 다음 시간에 이어서 하기.
 
-        }
         //===========================================================
         // 전,
         // 값으로, mid+mpw, 문자열을 사용했고
@@ -67,6 +60,7 @@ public class LoginController extends HttpServlet {
             // 로그인한 유저 정보가 디비에 있다면 가져오기
             MemberDTO memberDTO = MemberService.INSTANCE.login(mid, mpw);
 
+
             //===================================================================
             if(rememberMe){ // 자동 로그인이 맞다면,
                 // UUID : 랜덤하게 생성하는 문자열.
@@ -83,8 +77,8 @@ public class LoginController extends HttpServlet {
                 // 자동 로그인을 해당 쿠키 정보로 로그인을 함
                 Cookie rememberCookie = new Cookie("remember-me", uuid);
                 rememberCookie.setPath("/");
-                // 쿠키의 유효기간, 3분
-                rememberCookie.setMaxAge(60*3);
+                // 쿠키의 유효기간,
+                rememberCookie.setMaxAge(60*60*24);
                 // 서버에서 만든 쿠키를 웹 브라우저에게 전달
                 resp.addCookie(rememberCookie);
             }
