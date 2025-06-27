@@ -11,5 +11,7 @@ public class MemberVO {
     private String mid;
     private String mpw;
     private String mname;
+    //추가, 자동로그인uuid
+    private String uuid;
 }
 

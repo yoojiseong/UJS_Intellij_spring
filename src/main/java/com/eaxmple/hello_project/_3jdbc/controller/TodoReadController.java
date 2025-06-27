@@ -41,6 +41,37 @@ public class TodoReadController extends HttpServlet {
             // 1. 쿠키 박스의 이름을 임의로 지정 : viewTodos
             // 2. 쿠키 박스에서 viewTodos가 없으면 새로 만들고, 있으면 쿠키에 기록하기
             // 3. 쿠키 박스의 존재 여부를 확인 할 기능이 필요함
+            // 쿠키 찾기 , req.getCookies() : 전체 쿠키 목록
+            // 있으면, 있는 쿠키 사용, 없으면, 새로 생성 해서 사용.
+            Cookie viewTodoCookie = findCookie(req.getCookies(),"viewTodos");
+
+            // 쿠키 박스에 저장된 : 사용자 조회한 todo 의 번호를 문자열 형태로 저장 할 예정.
+            // 저장이 되어 있다면, 불러오기. 예) 3-4-,
+            String todoListStr = viewTodoCookie.getValue();
+            //상태 변수, exist
+            boolean exist = false;
+
+            // 유효성 체크. todoListStr , 문자열이 널인지 여부, tno(숫자)+ "-", 3-4- ,이런형식 검사
+            // todoListStr = "1-2-7-", 조회한 , todo 번호를 - 구분자로해서, 포맷으로 저장.
+            // todoListStr = ""
+            if(todoListStr!=null && todoListStr.indexOf(tno+"-") >= 0){
+                exist = true;
+            }
+            log.info("쿠키 박스가 있고, 안에 조회한 내용이 있다면: exitst : " + exist);
+
+            // 쿠키 박스 안에, 조회한 내용이 없는 경우, -> 기록을 하자.
+            if(!exist){
+                // 문자열 안에 조회한 번호를 기록
+                todoListStr += tno+"-";
+                // 쿠키에 설정하는 옵션.
+                viewTodoCookie.setValue(todoListStr);
+                // 쿠키를 적용할 범위 , 전체 범위.
+                viewTodoCookie.setPath("/");
+                // 쿠키의 생존 시간, 5분
+                viewTodoCookie.setMaxAge(60 * 5);
+                // 서버 -> 웹브라우저로 전달
+                resp.addCookie(viewTodoCookie);
+            }
             //=======================================================================
             // 화면 전달.
             req.getRequestDispatcher("/WEB-INF/todo/todoRead2.jsp").forward(req,resp);

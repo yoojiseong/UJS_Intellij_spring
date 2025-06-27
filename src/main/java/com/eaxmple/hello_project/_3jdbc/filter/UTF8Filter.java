@@ -22,6 +22,5 @@ public class UTF8Filter implements Filter {
         //위의 규칙 검사 후 다시 계속 검사함
         chain.doFilter(request, response);
 
-        HttpSession session = req.getSession();
     }
 }
