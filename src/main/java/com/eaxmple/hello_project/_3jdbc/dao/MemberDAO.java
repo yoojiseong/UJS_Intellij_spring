@@ -45,7 +45,7 @@ public class MemberDAO {
 
     // uuid를 이용해서 맴버를 조회 하는 기능이 필요함
     public MemberVO getMemberVOByUuid(String uuid) throws Exception {
-        String query = "select mid,mpw,mname uuid from tbl_member where uuid=?";
+        String query = "select mid,mpw,mname,uuid from tbl_member where uuid=?";
 
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
         @Cleanup PreparedStatement pstmt = connection.prepareStatement(query);

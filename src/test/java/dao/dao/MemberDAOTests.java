@@ -45,7 +45,7 @@ public class MemberDAOTests {
         String uuid = "393b9cae-2e37-47d2-a2ae-2336999cdb73";
         MemberVO memberVO = memberDAO.getMemberVOByUuid(uuid);
         log.info("DAO 테스트 uuid로 검색한 유저 : "  + memberVO);
-
+        
     }
 
 }

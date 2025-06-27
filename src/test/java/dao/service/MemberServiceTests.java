@@ -1,6 +1,7 @@
 package dao.service;
 
 
+import com.eaxmple.hello_project._3jdbc.domain.MemberVO;
 import com.eaxmple.hello_project._3jdbc.dto.MemberDTO;
 import com.eaxmple.hello_project._3jdbc.service.MemberService;
 import lombok.extern.log4j.Log4j2;
@@ -36,4 +37,13 @@ public class MemberServiceTests {
         memberService.updateUuid(mid, uuid);
     }
 
+    //uuid로 유저 검색
+    @Test
+    public void testSearchWithUuid() throws Exception {
+        // 실제 테이블에서 uuid를 복사해서 사용하기.
+        String uuid = "393b9cae-2e37-47d2-a2ae-2336999cdb73";
+        MemberDTO memberDTO = MemberService.INSTANCE.getMemberDTOByUuid(uuid);
+        log.info("MemberService 테스트 uuid로 검색한 유저 : "  + memberDTO);
+
+    }
 }
