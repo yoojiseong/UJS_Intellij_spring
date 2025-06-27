@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +33,15 @@ public class TodoReadController extends HttpServlet {
 
             // 데이터를 화면에 탑재.
             req.setAttribute("dto",todoDTO);
+            //=======================================================================
+            // 서버-> 웹 브라우저에게 쿠키에 저장해주세요 응답
+            // 사용자가 하나 조회를 한 번호를 쿠키에 담을 예정
+
+            //작업 개요.
+            // 1. 쿠키 박스의 이름을 임의로 지정 : viewTodos
+            // 2. 쿠키 박스에서 viewTodos가 없으면 새로 만들고, 있으면 쿠키에 기록하기
+            // 3. 쿠키 박스의 존재 여부를 확인 할 기능이 필요함
+            //=======================================================================
             // 화면 전달.
             req.getRequestDispatcher("/WEB-INF/todo/todoRead2.jsp").forward(req,resp);
 
@@ -40,5 +50,33 @@ public class TodoReadController extends HttpServlet {
             throw new RuntimeException(e);
         }
 
+    }
+
+    //쿠키 찾기 기능
+    // 매개변수 1) cookies 쿠키 상자들이 들어 있는 전체 목록
+    // 매개변수 2) 쿠키 상자의 이름 : viewTodos
+    private Cookie findCookie(Cookie[] cookies, String findCookieName) {
+        // 1. 찾을 쿠키를 담아둘 임시 쿠키 정의
+        Cookie targetCookie = null;
+
+        // 2. 전체 목록에서 반복문으로 쿠키 박스의 이름(viewTodos)가 있는지 조사
+        // cookies에 데이터가 있는지 확인
+        if(cookies!=null && cookies.length>0){
+            for(Cookie ck : cookies){
+                if(ck.getName().equals(findCookieName)){
+                    targetCookie = ck;
+                    break;
+                }
+            }
+        }
+        // 3. 찾고자 하는 쿠키 박스가 없으면 생성하기
+        if(targetCookie==null){
+            targetCookie = new Cookie(findCookieName,"");
+            //쿠키의 적용 범위 지정 -> 전체로 지정
+            targetCookie.setPath("/");
+            // 쿠키의 유효 시간, 5분 초*분*시간
+            targetCookie.setMaxAge(60*5);
+        }
+        return targetCookie;
     }
 }

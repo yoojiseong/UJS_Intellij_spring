@@ -1,5 +1,7 @@
 package com.eaxmple.hello_project._3jdbc.controller;
 
+import com.eaxmple.hello_project._3jdbc.dto.MemberDTO;
+import com.eaxmple.hello_project._3jdbc.service.MemberService;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
@@ -21,15 +23,36 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        log.info("로그인 로직 처리, doPost");
-        //로그인 화면에서 mid, mpw의 값을 가져오기
+        log.info("로그인 로직 처리 , doPost");
+        //로그인 화면에서, mid, mpw 의 값을 가져오기,
         String mid = req.getParameter("mid");
         String mpw = req.getParameter("mpw");
-        String str = mid+mpw;
-        // 세션(서버의 임시 메모리 공간)에 키 : loginInfo , 값 : mid+mpw으로 저장하기
-        HttpSession session = req.getSession();
-        //키 : loginInfo , 값 : mid+mpw으로 저장
-        session.setAttribute("loginInfo", str);
-        resp.sendRedirect("/todo/list2");
+
+        // 전,
+        // 값으로, mid+mpw, 문자열을 사용했고
+//        String str = mid+mpw;
+//        // 임시 로그인 구현, 서버의 세션을 이용해서,
+//        // 서버의 임시 메모리 공간인 세션이라는 곳에, 키 : loginInfo , 값으로 : mid+mpw, 저장,
+//        HttpSession session = req.getSession();
+//        // 키 : loginInfo , 값으로 : mid+mpw, 저장
+//        session.setAttribute("loginInfo", str);
+//        resp.sendRedirect("/todo/list2");
+
+        // 후
+        // 디비에서, 로그인 처리를 한 유저를 , 담기 MemberDTO을 값으로 저장,
+        try {
+            // 로그인한 유저 정보가 디비에 있다면 가져오기
+            MemberDTO memberDTO = MemberService.INSTANCE.login(mid, mpw);
+            // 세션 도구 이용하고
+            HttpSession session = req.getSession();
+            // 세션(서버의 임시 메모리 저장소), 키 : loginInfo, 값 : memberDTO , 저장
+            session.setAttribute("loginInfo", memberDTO);
+            resp.sendRedirect("/todo/list2");
+        }catch (Exception e){
+            // 서버에서 -> 웹브라우저로 데이터 전달, 쿼리스트링 형식
+            resp.sendRedirect("/login?result=error");
+        }
+
     }
+
 }
